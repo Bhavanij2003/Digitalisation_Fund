@@ -1,9 +1,11 @@
-# Suryan Benefit Fund — Deposit &amp; Share Application Digitisation
+# Suryan Benefit Fund — Deposit & Share Application Digitisation
 
+## Live Demo
 
-Watch demonstration video
-https://drive.google.com/file/d/1bbduYhds5xCdiragIcZ1Y8qiok_DnFiG/view?usp=drive_link
+- **Frontend (live):** https://digitalisation-fund.vercel.app/
+- **Demonstration video:** https://drive.google.com/file/d/1bbduYhds5xCdiragIcZ1Y8qiok_DnFiG/view?usp=drive_link
 
+> Note: the backend isn't currently hosted live, so the frontend above will show "Could not reach the API" until you run the backend locally (see Setup below) or point `API_BASE` in `frontend/app.js` at a hosted backend. The demonstration video shows the complete working system end-to-end.
 
 A prototype system that turns manually filled Deposit Application Forms and
 Share Application forms into searchable digital records, using OCR with a
