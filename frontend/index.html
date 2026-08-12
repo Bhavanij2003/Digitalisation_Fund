@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SBF Digitisation — Dashboard</title>
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="topbar">
+    <div class="brand">Suryan Benefit Fund<small>Form Digitisation Register</small></div>
+    <nav>
+      <a href="index.html" class="active">Dashboard</a>
+      <a href="upload.html">Upload</a>
+      <a href="search.html">Search &amp; Export</a>
+    </nav>
+  </div>
+
+  <div class="wrap">
+    <h1 class="page-title">Processing queue</h1>
+    <p class="page-sub">Documents awaiting or recently completing digitisation.</p>
+
+    <div class="panel">
+      <div style="display:flex; gap:10px; margin-bottom:16px;">
+        <select id="statusFilter" style="max-width:220px">
+          <option value="">All statuses</option>
+          <option>Uploaded</option>
+          <option>Processing</option>
+          <option>Pending Verification</option>
+          <option>Verified</option>
+          <option>Rejected</option>
+          <option>Duplicate</option>
+        </select>
+        <button class="secondary" onclick="load()">Refresh</button>
+      </div>
+      <div id="tableHolder">
+        <div class="empty-state"><div class="glyph">…</div>Loading documents</div>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      Digitisation prototype for Suryan Benefit Fund (Madras) Limited — deposit &amp; share
+      application forms. Not connected to any production banking system.
+    </div>
+  </div>
+
+<script src="app.js"></script>
+<script>
+async function load() {
+  const holder = document.getElementById("tableHolder");
+  const status = document.getElementById("statusFilter").value;
+  try {
+    const qs = status ? `?status=${encodeURIComponent(status)}` : "";
+    const docs = await apiGet(`/api/documents${qs}`);
+    if (!docs.length) {
+      holder.innerHTML = `<div class="empty-state"><div class="glyph">∅</div>No documents match this view yet.</div>`;
+      return;
+    }
+    const rows = docs.map(d => `
+      <tr>
+        <td class="doc-number">${d.document_number}</td>
+        <td>${d.form_type}</td>
+        <td>${new Date(d.upload_date).toLocaleString()}</td>
+        <td>${d.uploaded_by || "—"}</td>
+        <td>${statusBadge(d.processing_status)}</td>
+        <td><a href="verify.html?id=${d.document_id}">Open →</a></td>
+      </tr>`).join("");
+    holder.innerHTML = `
+      <table>
+        <thead><tr><th>Document #</th><th>Form</th><th>Uploaded</th><th>By</th><th>Status</th><th></th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+  } catch (e) {
+    holder.innerHTML = `<div class="empty-state"><div class="glyph">!</div>Could not reach the API at ${API_BASE}.<br>${e.message}</div>`;
+  }
+}
+document.getElementById("statusFilter").addEventListener("change", load);
+load();
+</script>
+</body>
+</html>

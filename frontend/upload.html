@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SBF Digitisation — Upload</title>
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="topbar">
+    <div class="brand">Suryan Benefit Fund<small>Form Digitisation Register</small></div>
+    <nav>
+      <a href="index.html">Dashboard</a>
+      <a href="upload.html" class="active">Upload</a>
+      <a href="search.html">Search &amp; Export</a>
+    </nav>
+  </div>
+
+  <div class="wrap" style="max-width:720px;">
+    <h1 class="page-title">Upload a completed form</h1>
+    <p class="page-sub">Accepted file types: JPG, JPEG, PNG, PDF. One form per upload.</p>
+
+    <div class="panel">
+      <div class="dropzone" id="dropzone">
+        <span class="big" id="dzLabel">Drag a scanned form here, or click to browse</span>
+        <span id="fileName" style="font-family: var(--mono); font-size: 12px;"></span>
+        <input type="file" id="fileInput" accept=".jpg,.jpeg,.png,.pdf" style="display:none">
+      </div>
+
+      <div class="field-row" style="margin-top:20px;">
+        <label>Uploaded by</label>
+        <input type="text" id="uploadedBy" value="staff" placeholder="Employee name or ID">
+      </div>
+
+      <div class="field-row">
+        <label>Form type (optional — leave blank to auto-detect)</label>
+        <select id="formTypeHint">
+          <option value="">Auto-detect from form heading</option>
+          <option value="deposit">Deposit Application Form</option>
+          <option value="share">Application for Share</option>
+        </select>
+      </div>
+
+      <div class="btn-row">
+        <button id="submitBtn" onclick="doUpload()">Upload &amp; process</button>
+        <button class="ghost" onclick="reset()">Clear</button>
+      </div>
+
+      <div id="resultBox" style="margin-top:20px;"></div>
+    </div>
+  </div>
+
+<script src="app.js"></script>
+<script>
+let selectedFile = null;
+const dropzone = document.getElementById("dropzone");
+const fileInput = document.getElementById("fileInput");
+
+dropzone.addEventListener("click", () => fileInput.click());
+dropzone.addEventListener("dragover", e => { e.preventDefault(); dropzone.classList.add("drag"); });
+dropzone.addEventListener("dragleave", () => dropzone.classList.remove("drag"));
+dropzone.addEventListener("drop", e => {
+  e.preventDefault();
+  dropzone.classList.remove("drag");
+  if (e.dataTransfer.files.length) setFile(e.dataTransfer.files[0]);
+});
+fileInput.addEventListener("change", () => { if (fileInput.files.length) setFile(fileInput.files[0]); });
+
+function setFile(f) {
+  selectedFile = f;
+  document.getElementById("fileName").textContent = f.name;
+}
+function reset() {
+  selectedFile = null;
+  fileInput.value = "";
+  document.getElementById("fileName").textContent = "";
+  document.getElementById("resultBox").innerHTML = "";
+}
+
+async function doUpload() {
+  if (!selectedFile) { toast("Choose a file first", "error"); return; }
+  const btn = document.getElementById("submitBtn");
+  btn.disabled = true;
+  btn.textContent = "Processing…";
+
+  const fd = new FormData();
+  fd.append("file", selectedFile);
+  fd.append("uploaded_by", document.getElementById("uploadedBy").value || "staff");
+  const hint = document.getElementById("formTypeHint").value;
+  if (hint) fd.append("form_type_hint", hint);
+
+  try {
+    const res = await fetch(`${API_BASE}/api/upload`, { method: "POST", body: fd });
+    const data = await res.json();
+
+    if (res.status === 409) {
+      document.getElementById("resultBox").innerHTML = `
+        <div class="errors-box">This form looks like a duplicate of
+        <strong>${data.existing_document_number}</strong>.
+        <a href="verify.html?id=${data.existing_document_id}">Open the existing record →</a></div>`;
+      return;
+    }
+    if (!res.ok) throw new Error(data.detail || "Upload failed");
+
+    if (data.form_type === "unknown") {
+      document.getElementById("resultBox").innerHTML = `
+        <div class="errors-box">Could not automatically identify the form type.
+        Re-upload and choose the form type manually from the dropdown above.</div>`;
+      return;
+    }
+
+    toast(`Processed as ${data.form_type} form — ${data.document_number}`, "success");
+    document.getElementById("resultBox").innerHTML = `
+      <div class="panel" style="background:var(--green-bg); border-color:var(--green);">
+        Document <strong>${data.document_number}</strong> processed with
+        ${data.fields.length} fields extracted.<br>
+        <a href="verify.html?id=${data.document_id}">Go to verification screen →</a>
+      </div>`;
+  } catch (e) {
+    toast(e.message, "error");
+    document.getElementById("resultBox").innerHTML = `<div class="errors-box">${e.message}</div>`;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Upload & process";
+  }
+}
+</script>
+</body>
+</html>

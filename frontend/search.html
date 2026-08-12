@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SBF Digitisation — Search &amp; Export</title>
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="topbar">
+    <div class="brand">Suryan Benefit Fund<small>Form Digitisation Register</small></div>
+    <nav>
+      <a href="index.html">Dashboard</a>
+      <a href="upload.html">Upload</a>
+      <a href="search.html" class="active">Search &amp; Export</a>
+    </nav>
+  </div>
+
+  <div class="wrap">
+    <h1 class="page-title">Search digitised applications</h1>
+    <p class="page-sub">Search across both deposit and share applications, then export the results.</p>
+
+    <div class="panel">
+      <div class="search-bar">
+        <div class="field-row"><label>Customer / applicant name</label><input type="text" id="customer_name"></div>
+        <div class="field-row"><label>Phone number</label><input type="text" id="phone_number"></div>
+        <div class="field-row"><label>Share number</label><input type="text" id="share_number"></div>
+        <div class="field-row"><label>Deposit account number</label><input type="text" id="deposit_account_number"></div>
+        <div class="field-row"><label>Application date (YYYY-MM-DD)</label><input type="text" id="application_date" placeholder="e.g. 2026-03-14"></div>
+        <div class="field-row">
+          <label>Deposit type</label>
+          <select id="deposit_type">
+            <option value="">Any</option>
+            <option>Fixed Deposit</option>
+            <option>Savings Deposit</option>
+            <option>Recurring Deposit</option>
+          </select>
+        </div>
+        <div class="field-row"><label>Nominee name</label><input type="text" id="nominee_name"></div>
+        <div class="field-row">
+          <label>Processing status</label>
+          <select id="processing_status">
+            <option value="">Any</option>
+            <option>Uploaded</option>
+            <option>Processing</option>
+            <option>Pending Verification</option>
+            <option>Verified</option>
+            <option>Rejected</option>
+            <option>Duplicate</option>
+          </select>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button onclick="doSearch()">Search</button>
+        <button class="secondary" onclick="doExport('csv')">Export CSV</button>
+        <button class="secondary" onclick="doExport('excel')">Export Excel</button>
+        <button class="ghost" onclick="clearForm()">Clear filters</button>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top:20px;">
+      <div id="resultsHolder"><div class="empty-state"><div class="glyph">⌕</div>Enter filters above and search.</div></div>
+    </div>
+  </div>
+
+<script src="app.js"></script>
+<script>
+function currentFilters() {
+  const ids = ["customer_name","phone_number","share_number","deposit_account_number",
+               "application_date","deposit_type","nominee_name","processing_status"];
+  const out = {};
+  ids.forEach(id => {
+    const v = document.getElementById(id).value.trim();
+    if (v) out[id] = v;
+  });
+  return out;
+}
+
+function clearForm() {
+  document.querySelectorAll(".search-bar input, .search-bar select").forEach(el => el.value = "");
+}
+
+async function doSearch() {
+  const holder = document.getElementById("resultsHolder");
+  holder.innerHTML = `<div class="empty-state">Searching…</div>`;
+  try {
+    const rows = await apiPostJSON("/api/search", currentFilters());
+    if (!rows.length) {
+      holder.innerHTML = `<div class="empty-state"><div class="glyph">∅</div>No records match those filters.</div>`;
+      return;
+    }
+    const trs = rows.map(r => `
+      <tr>
+        <td class="doc-number">${r.document_number}</td>
+        <td>${r.form_type}</td>
+        <td>${r.customer_name || "—"}</td>
+        <td>${r.phone_number || r.share_number || "—"}</td>
+        <td>${r.deposit_type || "—"}</td>
+        <td>${r.amount || "—"}</td>
+        <td>${r.nominee_name || "—"}</td>
+        <td>${statusBadge(r.processing_status)}</td>
+        <td><a href="verify.html?id=${r.document_id}">Open →</a></td>
+      </tr>`).join("");
+    holder.innerHTML = `
+      <table>
+        <thead><tr>
+          <th>Document #</th><th>Form</th><th>Name</th><th>Phone / Share #</th>
+          <th>Deposit type</th><th>Amount</th><th>Nominee</th><th>Status</th><th></th>
+        </tr></thead>
+        <tbody>${trs}</tbody>
+      </table>
+      <div style="margin-top:10px; font-size:12px; color:var(--ink-soft);">${rows.length} record(s) found.</div>`;
+  } catch (e) {
+    holder.innerHTML = `<div class="empty-state"><div class="glyph">!</div>${e.message}</div>`;
+  }
+}
+
+async function doExport(kind) {
+  const filters = currentFilters();
+  try {
+    const res = await fetch(`${API_BASE}/api/export/${kind}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(filters),
+    });
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      throw new Error(data.detail || "Nothing to export for these filters.");
+    }
+    const blob = await res.blob();
+    const disposition = res.headers.get("Content-Disposition") || "";
+    const match = disposition.match(/filename="?([^"]+)"?/);
+    const filename = match ? match[1] : `export.${kind === "excel" ? "xlsx" : "csv"}`;
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(url);
+    toast(`Exported ${filename}`, "success");
+  } catch (e) {
+    toast(e.message, "error");
+  }
+}
+</script>
+</body>
+</html>

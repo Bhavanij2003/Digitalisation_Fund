@@ -1,0 +1,366 @@
+{
+    "application_date": {
+        "x": 0.8118,
+        "y": 0.0855,
+        "w": 0.1188,
+        "h": 0.0255,
+        "type": "text"
+    },
+    "Fixed Deposit": {
+        "x": 0.1853,
+        "y": 0.1545,
+        "w": 0.0147,
+        "h": 0.0114,
+        "type": "text"
+    },
+    "Savings Deposit": {
+        "x": 0.1841,
+        "y": 0.1927,
+        "w": 0.0159,
+        "h": 0.0127,
+        "type": "text"
+    },
+    "Recurring Deposit": {
+        "x": 0.3994,
+        "y": 0.1927,
+        "w": 0.0159,
+        "h": 0.0114,
+        "type": "text"
+    },
+    "deposit_amount_figures": {
+        "x": 0.5418,
+        "y": 0.1405,
+        "w": 0.27,
+        "h": 0.0227,
+        "type": "text"
+    },
+    "deposit_amount_words": {
+        "x": 0.5365,
+        "y": 0.1659,
+        "w": 0.2771,
+        "h": 0.0141,
+        "type": "text"
+    },
+    "deposit_term": {
+        "x": 0.83,
+        "y": 0.1414,
+        "w": 0.0906,
+        "h": 0.0564,
+        "type": "text"
+    },
+    "term_unit": {
+        "x": 0.8329,
+        "y": 0.2027,
+        "w": 0.0859,
+        "h": 0.0218,
+        "type": "text"
+    },
+    "Cheque": {
+        "x": 0.0794,
+        "y": 0.2995,
+        "w": 0.0135,
+        "h": 0.0118,
+        "type": "text"
+    },
+    "Draft": {
+        "x": 0.0782,
+        "y": 0.3214,
+        "w": 0.0182,
+        "h": 0.0141,
+        "type": "text"
+    },
+    "Cash": {
+        "x": 0.0771,
+        "y": 0.3468,
+        "w": 0.0206,
+        "h": 0.0141,
+        "type": "text"
+    },
+    "cheque_or_draft_number": {
+        "x": 0.1894,
+        "y": 0.3127,
+        "w": 0.1659,
+        "h": 0.0177,
+        "type": "text"
+    },
+    "bank_name": {
+        "x": 0.3588,
+        "y": 0.315,
+        "w": 0.1594,
+        "h": 0.0205,
+        "type": "text"
+    },
+    "remittance_date": {
+        "x": 0.2818,
+        "y": 0.3391,
+        "w": 0.0982,
+        "h": 0.0268,
+        "type": "text"
+    },
+    "remittance_place": {
+        "x": 0.4206,
+        "y": 0.3405,
+        "w": 0.1041,
+        "h": 0.0255,
+        "type": "text"
+    },
+    "renewal_indicator": {
+        "x": 0.0641,
+        "y": 0.3777,
+        "w": 0.1318,
+        "h": 0.0205,
+        "type": "text"
+    },
+    "existing_fd_rd_number": {
+        "x": 0.2624,
+        "y": 0.3723,
+        "w": 0.0953,
+        "h": 0.0245,
+        "type": "text"
+    },
+    "maturity_date": {
+        "x": 0.4476,
+        "y": 0.37,
+        "w": 0.0747,
+        "h": 0.0141,
+        "type": "text"
+    },
+    "maturity_amount": {
+        "x": 0.4476,
+        "y": 0.3864,
+        "w": 0.0782,
+        "h": 0.0141,
+        "type": "text"
+    },
+    "first_depositor_name": {
+        "x": 0.1594,
+        "y": 0.4132,
+        "w": 0.2176,
+        "h": 0.0191,
+        "type": "text"
+    },
+    "first_depositor_age": {
+        "x": 0.4541,
+        "y": 0.4082,
+        "w": 0.0694,
+        "h": 0.0227,
+        "type": "text"
+    },
+    "first_depositor_guardian": {
+        "x": 0.2047,
+        "y": 0.4477,
+        "w": 0.3135,
+        "h": 0.0164,
+        "type": "text"
+    },
+    "first_depositor_signature": {
+        "x": 0.2194,
+        "y": 0.76,
+        "w": 0.3065,
+        "h": 0.0373,
+        "type": "text"
+    },
+    "second_depositor_name": {
+        "x": 0.1629,
+        "y": 0.4836,
+        "w": 0.2376,
+        "h": 0.015,
+        "type": "text"
+    },
+    "second_depositor_age": {
+        "x": 0.4488,
+        "y": 0.4759,
+        "w": 0.0759,
+        "h": 0.0214,
+        "type": "text"
+    },
+    "second_depositor_guardian": {
+        "x": 0.2065,
+        "y": 0.5141,
+        "w": 0.3029,
+        "h": 0.0155,
+        "type": "text"
+    },
+    "second_depositor_signature": {
+        "x": 0.2206,
+        "y": 0.8036,
+        "w": 0.2988,
+        "h": 0.0355,
+        "type": "text"
+    },
+    "nominee_name": {
+        "x": 0.1853,
+        "y": 0.5332,
+        "w": 0.1618,
+        "h": 0.0177,
+        "type": "text"
+    },
+    "nominee_relationship": {
+        "x": 0.1853,
+        "y": 0.555,
+        "w": 0.1935,
+        "h": 0.0164,
+        "type": "text"
+    },
+    "address": {
+        "x": 0.5429,
+        "y": 0.2973,
+        "w": 0.3759,
+        "h": 0.0255,
+        "type": "text"
+    },
+    "nominee_age": {
+        "x": 0.4582,
+        "y": 0.5382,
+        "w": 0.0676,
+        "h": 0.0373,
+        "type": "text"
+    },
+    "pincode": {
+        "x": 0.7441,
+        "y": 0.375,
+        "w": 0.1829,
+        "h": 0.0177,
+        "type": "text"
+    },
+    "phone_number": {
+        "x": 0.6188,
+        "y": 0.3968,
+        "w": 0.2882,
+        "h": 0.0255,
+        "type": "text"
+    },
+    "occupation": {
+        "x": 0.6318,
+        "y": 0.4223,
+        "w": 0.2953,
+        "h": 0.0218,
+        "type": "text"
+    },
+    "share_number": {
+        "x": 0.0794,
+        "y": 0.5945,
+        "w": 0.1635,
+        "h": 0.0177,
+        "type": "text"
+    },
+    "folio_number": {
+        "x": 0.0812,
+        "y": 0.6314,
+        "w": 0.1671,
+        "h": 0.0205,
+        "type": "text"
+    },
+    "Sole/First Depositor": {
+        "x": 0.4818,
+        "y": 0.6059,
+        "w": 0.0441,
+        "h": 0.0241,
+        "type": "text"
+    },
+    "Jointly": {
+        "x": 0.4818,
+        "y": 0.6059,
+        "w": 0.0471,
+        "h": 0.0227,
+        "type": "text"
+    },
+    "Either or Survivor": {
+        "x": 0.4188,
+        "y": 0.6286,
+        "w": 0.0435,
+        "h": 0.0205,
+        "type": "text"
+    },
+    "Anyone or Survivor": {
+        "x": 0.4424,
+        "y": 0.6491,
+        "w": 0.0565,
+        "h": 0.0232,
+        "type": "text"
+    },
+    "Monthly": {
+        "x": 0.5629,
+        "y": 0.4936,
+        "w": 0.0182,
+        "h": 0.01,
+        "type": "text"
+    },
+    "Quarterly": {
+        "x": 0.77,
+        "y": 0.4936,
+        "w": 0.0147,
+        "h": 0.0155,
+        "type": "text"
+    },
+    "Half-Yearly": {
+        "x": 0.5665,
+        "y": 0.5177,
+        "w": 0.0118,
+        "h": 0.0091,
+        "type": "text"
+    },
+    "Yearly": {
+        "x": 0.7665,
+        "y": 0.5155,
+        "w": 0.0141,
+        "h": 0.01,
+        "type": "text"
+    },
+    "Yes": {
+        "x": 0.5665,
+        "y": 0.5691,
+        "w": 0.0159,
+        "h": 0.015,
+        "type": "text"
+    },
+    "No": {
+        "x": 0.7688,
+        "y": 0.5714,
+        "w": 0.0171,
+        "h": 0.0091,
+        "type": "text"
+    },
+    "Not Applicable": {
+        "x": 0.5653,
+        "y": 0.5945,
+        "w": 0.0141,
+        "h": 0.0114,
+        "type": "text"
+    },
+    "Collect Cash": {
+        "x": 0.5665,
+        "y": 0.6468,
+        "w": 0.0159,
+        "h": 0.0114,
+        "type": "text"
+    },
+    "Collect Post-Dated Cheque": {
+        "x": 0.5653,
+        "y": 0.6682,
+        "w": 0.0206,
+        "h": 0.0141,
+        "type": "text"
+    },
+    "Credit to SBF/Other Account": {
+        "x": 0.7247,
+        "y": 0.685,
+        "w": 0.2088,
+        "h": 0.0227,
+        "type": "text"
+    },
+    "introducer_name": {
+        "x": 0.6629,
+        "y": 0.7423,
+        "w": 0.2641,
+        "h": 0.0218,
+        "type": "text"
+    },
+    "introducer_address\"": {
+        "x": 0.5641,
+        "y": 0.7768,
+        "w": 0.3729,
+        "h": 0.0227,
+        "type": "text"
+    }
+}
