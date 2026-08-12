@@ -1,0 +1,11 @@
+
+1. Field-position calibration is not perfectly reliable
+2. Calibration is scan-specific and must be redone per form layout
+3. Perspective correction can fail on off-angle or loosely framed photos
+4. Handwriting recognition accuracy is inherently limited
+5. No cross-validation between related fields
+6. Checkbox and signature detection is pixel-density based, not semantic
+7. No authentication or role-based access control
+8. Multi-page PDFs only process page 1
+9. Tamil handwriting is not specifically tuned for or benchmarked
+10. Accuracy figures depend on how many real forms have been verified

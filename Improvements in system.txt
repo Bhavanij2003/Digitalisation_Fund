@@ -1,0 +1,14 @@
+
+1. Redo calibration with finer, field-specific bounding boxes
+2. Use a form design with individual ruled cells/boxes per field for future print runs
+3. Improve perspective correction and camera-capture guidance for uploaders
+4. Evaluate a handwriting-specific model (e.g. TrOCR) alongside PaddleOCR
+5. Add a proper amount-in-figures vs amount-in-words validator
+6. Improve checkbox/signature detection beyond simple pixel density
+7. Add authentication and role-based access control
+8. Add batch upload and multi-page PDF splitting
+9. Add Tamil handwriting support and benchmarking
+10. Expand the verified sample size to get more reliable accuracy metrics
+11. Add role-based login matching clerk/cashier/secretary-MD approval fields
+12. Add an audit-trail view in the UI
+13. Add automatic maturity-date calculation from deposit date + term

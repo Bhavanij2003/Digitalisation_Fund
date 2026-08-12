@@ -1,0 +1,12 @@
+http://127.0.0.1:5500/
+
+Backend
+cd C:\Users\ADMIN\Downloads\project
+venv\Scripts\activate.bat
+cd backend
+uvicorn main:app --reload --port 8000
+
+
+Frontend
+cd C:\Users\ADMIN\Downloads\project\frontend
+py -3.11 -m http.server 5500
