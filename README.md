@@ -1,5 +1,10 @@
 # Suryan Benefit Fund — Deposit &amp; Share Application Digitisation
 
+
+Watch demonstration video
+https://drive.google.com/file/d/1bbduYhds5xCdiragIcZ1Y8qiok_DnFiG/view?usp=drive_link
+
+
 A prototype system that turns manually filled Deposit Application Forms and
 Share Application forms into searchable digital records, using OCR with a
 mandatory human verification step.
@@ -205,3 +210,5 @@ hardened for production:
   forms at once.
 - Add automatic maturity-date calculation from deposit date + term, to
   cross-check the OCR'd maturity date.
+
+
